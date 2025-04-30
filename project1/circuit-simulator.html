@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuit Simulator - Electronics Learning Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <!-- Dark Mode Toggle -->
+    <button id="darkModeToggle" class="fixed top-4 right-4 z-50 p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+        <svg class="w-6 h-6 dark:hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+        </svg>
+        <svg class="w-6 h-6 hidden dark:block text-yellow-300" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path>
+        </svg>
+    </button>
+
+    <!-- Navigation -->
+    <nav class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm fixed w-full z-20 top-0 border-b border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-xl font-bold text-gray-800 dark:text-white">ElectroLearn</a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="login.html" class="text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Login</a>
+                        <a href="signup.html" class="text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Signup</a>
+                        <a href="circuit-simulator.html" class="bg-blue-600 text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Circuit Simulator</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <!-- Circuit Simulator Header -->
+            <div class="py-8">
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Circuit Simulator</h1>
+                <p class="mt-2 text-gray-600 dark:text-gray-400">Design and simulate electronic circuits in real-time</p>
+            </div>
+
+            <!-- Simulator Toolbar -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm mb-6 p-4">
+                <div class="flex flex-wrap gap-4">
+                    <button class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
+                        <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        New Circuit
+                    </button>
+                    <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
+                        <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
+                        </svg>
+                        Save Circuit
+                    </button>
+                    <button class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors">
+                        <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Run Simulation
+                    </button>
+                </div>
+            </div>
+
+            <!-- Circuit Canvas -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <!-- Component Palette -->
+                <div class="lg:col-span-1 bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Components</h3>
+                    <div class="space-y-2">
+                        <div class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                            <span class="text-gray-700 dark:text-gray-300">Resistor</span>
+                        </div>
+                        <div class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                            <span class="text-gray-700 dark:text-gray-300">Capacitor</span>
+                        </div>
+                        <div class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                            <span class="text-gray-700 dark:text-gray-300">Inductor</span>
+                        </div>
+                        <div class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                            <span class="text-gray-700 dark:text-gray-300">Transistor</span>
+                        </div>
+                        <div class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                            <span class="text-gray-700 dark:text-gray-300">Diode</span>
+                        </div>
+                        <div class="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer">
+                            <span class="text-gray-700 dark:text-gray-300">Voltage Source</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Canvas -->
+                <div class="lg:col-span-3">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 h-[600px] flex items-center justify-center">
+                        <div class="text-center">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                            </svg>
+                            <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">Circuit Simulator Coming Soon</h3>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Our interactive circuit simulator is under development.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Saved Circuits -->
+            <div class="mt-8">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Saved Circuits</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Example Circuit Cards -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Basic LED Circuit</h3>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Simple LED circuit with current limiting resistor</p>
+                            <div class="mt-4 flex justify-end space-x-2">
+                                <button class="px-3 py-1 bg-blue-100 text-blue-600 rounded hover:bg-blue-200 transition-colors">Edit</button>
+                                <button class="px-3 py-1 bg-red-100 text-red-600 rounded hover:bg-red-200 transition-colors">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">555 Timer</h3>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Astable multivibrator using 555 timer IC</p>
+                            <div class="mt-4 flex justify-end space-x-2">
+                                <button class="px-3 py-1 bg-blue-100 text-blue-600 rounded hover:bg-blue-200 transition-colors">Edit</button>
+                                <button class="px-3 py-1 bg-red-100 text-red-600 rounded hover:bg-red-200 transition-colors">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Full-Wave Rectifier</h3>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Bridge rectifier with smoothing capacitor</p>
+                            <div class="mt-4 flex justify-end space-x-2">
+                                <button class="px-3 py-1 bg-blue-100 text-blue-600 rounded hover:bg-blue-200 transition-colors">Edit</button>
+                                <button class="px-3 py-1 bg-red-100 text-red-600 rounded hover:bg-red-200 transition-colors">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-center md:text-left mb-4 md:mb-0">
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Designed by Prajwal Dattatray Jadhav
+                    </p>
+                    <p class="text-gray-500 dark:text-gray-400">
+                        KITCOEK - © <span id="currentYear"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        darkModeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
+
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html> 
